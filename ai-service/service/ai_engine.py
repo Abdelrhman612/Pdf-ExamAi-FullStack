@@ -7,7 +7,6 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPEN_AI_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-
 def summary_prompt(content: str) -> str:
     return f"""
 أنت مدرس جامعي محترف.
