@@ -15,35 +15,28 @@ namespace backend.Controllers
     public class PdfController : ControllerBase
     {
         private readonly IFastApiService _fastApi;
-        private readonly AppDbContext _db;
+        private readonly IPdfRepository _repo;
         private readonly IWebHostEnvironment _env;
 
         public PdfController(
             IFastApiService fastApi,
-            AppDbContext db,
+            IPdfRepository repo,
             IWebHostEnvironment env)
         {
             _fastApi = fastApi;
-            _db = db;
+            _repo  = repo;
             _env = env;
         }
 
         [HttpPost("generate")]
-        public async Task<IActionResult> Generate(
-          [FromForm] IFormFile file,
-            [FromForm] string type,
-            [FromForm] int questionCount = 30)
+        public async Task<IActionResult> Generate(GeneratePdfDto dto)
         {
+            var file = dto.file;
+            var type = dto.type;
             if (file == null || file.Length == 0)
                 return BadRequest("File required");
 
-
-            var pdfBytes = await _fastApi.GeneratePdfAsync(new GeneratePdfDto
-            {
-                file = file,
-                type = type,
-                questionCount = questionCount
-            });
+            var pdfBytes = await _fastApi.GeneratePdfAsync(dto);
 
             var folder = Path.Combine(_env.ContentRootPath, "Uploads");
             Directory.CreateDirectory(folder);
@@ -61,10 +54,8 @@ namespace backend.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            _db.PdfFiles.Add(pdf);
-            await _db.SaveChangesAsync();
-
-
+           await _repo.AddPdf(pdf);
+           
             return File(pdfBytes, "application/pdf", $"{type}.pdf");
         }
     }
