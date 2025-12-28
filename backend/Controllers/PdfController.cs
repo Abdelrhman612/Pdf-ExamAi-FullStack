@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.data;
+using backend.Dto;
+using backend.InterFaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +14,12 @@ namespace backend.Controllers
     [Route("api/pdf")]
     public class PdfController : ControllerBase
     {
-        private readonly FastApiService _fastApi;
+        private readonly IFastApiService _fastApi;
         private readonly AppDbContext _db;
         private readonly IWebHostEnvironment _env;
 
         public PdfController(
-            FastApiService fastApi,
+            IFastApiService fastApi,
             AppDbContext db,
             IWebHostEnvironment env)
         {
@@ -36,7 +38,12 @@ namespace backend.Controllers
                 return BadRequest("File required");
 
 
-            var pdfBytes = await _fastApi.GeneratePdfAsync(file, type, questionCount);
+            var pdfBytes = await _fastApi.GeneratePdfAsync(new GeneratePdfDto
+            {
+                file = file,
+                type = type,
+                questionCount = questionCount
+            });
 
             var folder = Path.Combine(_env.ContentRootPath, "Uploads");
             Directory.CreateDirectory(folder);
