@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Dto;
+using backend.InterFaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
-    public class FastApiService
+    public class FastApiService : IFastApiService
     {
         private readonly HttpClient _httpClient;
 
@@ -15,11 +17,11 @@ namespace backend.Services
             _httpClient = httpClient;
         }
 
-        public async Task<byte[]> GeneratePdfAsync(
-            IFormFile file,
-             string type,
-             int questionCount)
+        public async Task<byte[]> GeneratePdfAsync(GeneratePdfDto Dto)
         {
+            var file = Dto.file;
+            var type = Dto.type;
+            var questionCount = Dto.questionCount;
             var content = new MultipartFormDataContent
             {
                 {
