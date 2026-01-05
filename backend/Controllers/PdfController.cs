@@ -24,7 +24,7 @@ namespace backend.Controllers
             IWebHostEnvironment env)
         {
             _fastApi = fastApi;
-            _repo  = repo;
+            _repo = repo;
             _env = env;
         }
 
@@ -37,6 +37,11 @@ namespace backend.Controllers
                 return BadRequest("File required");
 
             var pdfBytes = await _fastApi.GeneratePdfAsync(dto);
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+            {
+                return BadRequest("PDF generation failed");
+            }
 
             var folder = Path.Combine(_env.ContentRootPath, "Uploads");
             Directory.CreateDirectory(folder);
@@ -54,8 +59,9 @@ namespace backend.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-           await _repo.AddPdf(pdf);
-           
+
+            await _repo.AddPdf(pdf);
+
             return File(pdfBytes, "application/pdf", $"{type}.pdf");
         }
     }
