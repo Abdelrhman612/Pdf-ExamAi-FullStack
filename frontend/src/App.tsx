@@ -1,10 +1,14 @@
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router";
+import GeneratePdfPage from "./pages/GeneratePdf";
 
 function App() {
   return (
-    <div className="App">
-      <h1>PDF AI Generator</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<GeneratePdfPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
