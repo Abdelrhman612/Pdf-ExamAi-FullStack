@@ -1,4 +1,4 @@
 
-// const API_URL =  import.meta.env.REACT_APP_API_URL
+const API_URL =  import.meta.env.VITE_API_SERVICE_URL
 
- export const GeneratePdfUrl=`http://localhost:5000/api/pdf/generate`
+ export const GeneratePdfUrl=`${API_URL}/api/pdf/generate`
