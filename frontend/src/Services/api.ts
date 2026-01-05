@@ -1,0 +1,4 @@
+
+// const API_URL =  import.meta.env.REACT_APP_API_URL
+
+ export const GeneratePdfUrl=`http://localhost:5000/api/pdf/generate`
