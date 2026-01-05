@@ -5,16 +5,16 @@ using backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var allowedOrigins = builder.Configuration.GetSection("allowedOrigins").Get<string[]>();
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+var allowedOrigins = builder.Configuration.GetSection("allowedOrigins").Get<string[]>();
 builder.Services.AddCors(options =>
 {
     if (allowedOrigins != null && allowedOrigins.Length > 0)
     {
-        options.AddPolicy("React", builder => builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader());
+        options.AddPolicy("ReactPolicy", policy => policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
     }
 });
 
@@ -35,11 +35,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("ReactPolicy");
 app.UseHttpsRedirection();
-
-app.MapControllers();
-app.UseCors("React");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapGet("/", () => "Server is running...");
+app.MapControllers();
 app.Run();
 
