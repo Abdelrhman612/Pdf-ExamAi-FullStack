@@ -38,7 +38,14 @@ namespace backend.Services
                 content
             );
 
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+
+                throw new Exception($"FastAPI returned {response.StatusCode}: {errorContent}");
+            }
+
+
 
             return await response.Content.ReadAsByteArrayAsync();
         }
