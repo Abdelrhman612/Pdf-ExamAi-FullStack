@@ -4482,11 +4482,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\Pdf-Exam-ai\\backend\\backend.csproj",
+      "projectUniqueName": "D:\\Projects\\Pdf-Exam-ai\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "d:\\Projects\\Pdf-Exam-ai\\backend\\backend.csproj",
+      "projectPath": "D:\\Projects\\Pdf-Exam-ai\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\abdo\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\Pdf-Exam-ai\\backend\\obj\\",
+      "outputPath": "D:\\Projects\\Pdf-Exam-ai\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\abdo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4560,7 +4560,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.417/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
