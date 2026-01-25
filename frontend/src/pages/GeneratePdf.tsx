@@ -32,7 +32,6 @@ const GeneratePdfPage = () => {
         questionCount: questionCount.toString(),
       });
 
-      // ✅ تحقق إن الـ response blob
       const blob = new Blob([res.data], { type: "application/pdf" });
 
       if (blob.size === 0) {
@@ -41,7 +40,6 @@ const GeneratePdfPage = () => {
 
       const url = URL.createObjectURL(blob);
 
-      // Clean up old URL
       if (pdfUrl) {
         URL.revokeObjectURL(pdfUrl);
       }
@@ -51,12 +49,12 @@ const GeneratePdfPage = () => {
       console.error(err);
       if (err.response?.status === 429) {
         setError(
-          "OpenAI rate limit reached. Please wait a while and try again."
+          "OpenAI rate limit reached. Please wait a while and try again.",
         );
       } else {
         setError(
           err?.message ||
-            "Failed to generate PDF. Try reducing the number of questions."
+            "Failed to generate PDF. Try reducing the number of questions.",
         );
       }
     } finally {
@@ -72,7 +70,6 @@ const GeneratePdfPage = () => {
           AI PDF Generator
         </h1>
 
-        {/* File Upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Upload PDF
@@ -90,7 +87,6 @@ const GeneratePdfPage = () => {
           />
         </div>
 
-        {/* Type */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Output Type
@@ -106,7 +102,6 @@ const GeneratePdfPage = () => {
           </select>
         </div>
 
-        {/* Question Count */}
         {type !== "summary" && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -123,10 +118,8 @@ const GeneratePdfPage = () => {
           </div>
         )}
 
-        {/* Error */}
         {error && <p className="text-red-600 text-sm text-center">{error}</p>}
 
-        {/* Submit Button */}
         <button
           onClick={handleSubmit}
           disabled={loading}
@@ -141,7 +134,6 @@ const GeneratePdfPage = () => {
         </button>
       </div>
 
-      {/* PDF Preview */}
       {pdfUrl && (
         <div className="bg-white shadow-xl rounded-2xl p-4 mt-6 w-full max-w-5xl space-y-3">
           <div className="flex justify-between items-center mb-2">
