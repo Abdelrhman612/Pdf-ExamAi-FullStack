@@ -1,3 +1,17 @@
 fastapi
 uvicorn
 pypdf
+python-dotenv
+openai
+PyPDF2
+reportlab
+arabic_reshaper
+python-bidi
+pydantic
+requests
+python-multipart
+
+
+
+
+
