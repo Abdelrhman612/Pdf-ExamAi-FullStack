@@ -1,0 +1,44 @@
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: ${SA_PASSWORD}
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  ai-service:
+    build: ./ai-service
+    container_name: ai-service
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+  backend:
+    build: ./backend
+    container_name: backend
+    env_file:
+      - .env
+    depends_on:
+      - sqlserver
+      - ai-service
+    ports:
+      - "5000:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    env_file:
+      - .env
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  sql_data:
