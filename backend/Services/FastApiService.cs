@@ -34,7 +34,7 @@ namespace backend.Services
             };
 
             var response = await _httpClient.PostAsync(
-                "http://127.0.0.1:8000/generate-pdf",
+                "http://ai-service:8000/generate-pdf",
                 content
             );
 
